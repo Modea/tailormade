@@ -27,7 +27,7 @@ export default ({ component: C, props: cProps, ...rest }) => {
         !cProps.isAuthenticated
           ? <C {...props} {...cProps} /> 
           : <Redirect 
-              to={redirect === "" || redirect === null ? "/my-studies" : redirect} 
+              to={redirect === "" || redirect === null ? "/studies" : redirect} 
             />}
     />
   );

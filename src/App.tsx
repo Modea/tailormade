@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import { LinkContainer } from 'react-router-bootstrap';
-import { Nav, Navbar, NavItem } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
 import Routes from './Routes';
 import './App.css';
+import PageHeader from './components/PageHeader';
 
 class App extends React.Component<any, any> {
   public constructor(props) {
@@ -45,30 +44,13 @@ class App extends React.Component<any, any> {
     const childProps = {
       isAuthenticated: this.state.isAuthenticated,
       userHasAuthenticated: this.userHasAuthenticated,
+      handleLogout: this.handleLogout
     }
 
     return (
       !this.state.isAuthenticating &&
       <div className="App">
-        <Navbar fluid collapseOnSelect>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <Link to="/">Research App</Link>
-            </Navbar.Brand>
-            <Navbar.Toggle />
-          </Navbar.Header>
-          <Navbar.Collapse>
-            <Nav pullRight>
-              {this.state.isAuthenticated
-                ? <NavItem onClick={this.handleLogout}>Logout</NavItem> : 
-                <React.Fragment>
-                  <LinkContainer to="/">
-                    <NavItem>Login</NavItem> 
-                  </LinkContainer>
-                </React.Fragment> }
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
+        {this.state.isAuthenticated && <PageHeader handleLogout={this.handleLogout} />}
         <Routes childProps={childProps} />
       </div>
     );

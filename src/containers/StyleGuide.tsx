@@ -1,6 +1,7 @@
 import * as React from 'react';
 import './styles/StyleGuide.css';
 import { Table } from 'react-bootstrap';
+import { Card, CardContent, TextField, Checkbox, Button, FormControlLabel, Grid } from '@material-ui/core';
 import Heading from '../components/styled/Heading';
 import Text from '../components/styled/Text';
 
@@ -70,6 +71,37 @@ class StyleGuide extends React.Component<any, any> {
         <br/><br/>
         <h2>Forms</h2>
         <hr/>
+        <h3>Login Form</h3>
+        <Card raised style={{width: '40%', margin: '0 auto'}}>
+          <CardContent>
+            <form>
+              <TextField 
+                fullWidth
+                label="Email"
+                type="email"
+              />
+              <TextField 
+                fullWidth 
+                label="Password"
+                type="password"
+              />
+              <Grid container>
+                <Grid item xs={9} sm={9}>
+                  <FormControlLabel control={<Checkbox color="primary" />} label="Remember Me" />
+                </Grid>
+                <Grid item xs={3} sm={3}>
+                <Button
+                  value="login"
+                  type="submit"
+                  color="primary"
+                  variant="raised"
+                  >Sign In
+                </Button>
+                </Grid>
+              </Grid>
+            </form>
+          </CardContent>
+        </Card>
       </div>
     );
   }

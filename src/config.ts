@@ -1,7 +1,8 @@
 export default {
   apiGateway: {
-    REGION: "YOUR_API_GATEWAY_REGION",
-    URL: "YOUR_API_GATEWAY_URL" 
+    URL: 'https://cr7jsy6s2bcudbcm72d4ba6j74.appsync-api.us-east-2.amazonaws.com/graphql',
+    REGION: 'us-east-2',
+    AUTH_TYPE: 'AMAZON_COGNITO_USER_POOLS'
   },
   cognito: {
     REGION: "us-east-2",

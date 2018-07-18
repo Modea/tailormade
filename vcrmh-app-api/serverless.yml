@@ -26,9 +26,31 @@ provider:
   #environment: ${file(env.yml):${self:provider.stage}}
 
 functions:
-  hello:
-    handler: handler.hello
+  createUser:
+    role: arn:aws:iam::424067295584:role/AdminCreateUserLambdaRole
+    handler: handler.createUser
     events:
       - http:
-          path: hello
-          method: get
+          path: admin/createUser
+          method: post
+  getStudies:
+    role: arn:aws:iam::424067295584:role/UserGetAllStudiesRole
+    handler: handler.getStudies
+    events:
+      - http:
+          path: getStudies
+          method: post
+  getStudy:
+    role: arn:aws:iam::424067295584:role/UserGetAllStudiesRole
+    handler: handler.getStudy
+    events:
+      - http:
+          path: getStudy
+          method: post
+  listParticipantsForStudy:
+    role: arn:aws:iam::424067295584:role/ListParticpantsLambdaRole
+    handler: handler.listParticipantsForStudy
+    events:
+      - http:
+          path: listParticipants
+          method: post

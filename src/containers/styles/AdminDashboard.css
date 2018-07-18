@@ -1,0 +1,13 @@
+@media all and (min-width: 480px) { 
+
+  .create-user form { 
+    margin: 0 auto; 
+    max-width: 320px;
+  } 
+}
+
+.create-user form span.help-block { 
+  font-size: 14px; 
+  padding-bottom: 10px;
+  color: #999;
+}

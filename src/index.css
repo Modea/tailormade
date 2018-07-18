@@ -1,4 +1,4 @@
-body {
+html, body {
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
@@ -7,9 +7,9 @@ body {
   line-height: 19px;
 }
 
-select.form-control, textarea.form-control, input.form-control {
+/* select.form-control, textarea.form-control, input.form-control {
   font-size: 16px;
-}
+} */
 
 input[type=file] { 
   width: 100%;
@@ -42,4 +42,26 @@ p.subtext {
   line-height: 14px;
   margin: 0;
   padding: 0;
+}
+
+p.logo {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 300;
+  letter-spacing: 0.1ch;
+  text-decoration: none;
+  color: #585858
+}
+
+a.logo-link {
+  text-decoration: none;
+}
+
+p.logo span {
+  font-weight: 700;
+}
+
+p.logo.header {
+  font-size: 24px;
+  text-align: left;
 }

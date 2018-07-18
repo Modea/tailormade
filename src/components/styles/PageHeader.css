@@ -1,0 +1,16 @@
+.vanderbilt-logo {
+  max-width: 400px;
+}
+
+.user-flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.user-flex p {
+  margin: 0;
+  padding: 0;
+  padding-right: 10px;
+}
