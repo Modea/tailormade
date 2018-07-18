@@ -28,12 +28,12 @@ Before beginning setup ensure that you have the following installed:
    ```
    
 
-## Creating, Updating, and Deploying Lambda functions with `serverless`.
+## Creating, Updating, and Deploying Lambda functions with Serverless.
 Using the Serverless CLI will allow you to create, update and delete functions from your local environment instead of the AWS console.
 
 **Note:** You will need to be logged in to the AWS CLI to run `serverless deploy`.  To login, run `aws configure` and follow the prompts to sign in using your creditials for the environment.
 
 ## Building and Deploying to CI
-*To be completed following the completion of pipeline/environment setup.*
+*To be completed following the completion of environment/deployment pipeline setup.*
 
 
