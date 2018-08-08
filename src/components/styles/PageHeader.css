@@ -1,5 +1,5 @@
 .vanderbilt-logo {
-  max-width: 400px;
+  max-width: 304px;
 }
 
 .user-flex {
@@ -12,5 +12,5 @@
 .user-flex p {
   margin: 0;
   padding: 0;
-  padding-right: 10px;
+  margin-left: 10px;
 }

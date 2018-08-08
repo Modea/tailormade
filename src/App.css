@@ -1,6 +1,5 @@
 .App {
-  margin: 0 5%;
-  margin-top: 15px;
+  min-height: 100%;
 }
 
 .App .navbar-brand { 

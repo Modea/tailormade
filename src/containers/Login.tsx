@@ -1,8 +1,41 @@
 import * as React from 'react';
 import { Auth } from "aws-amplify";
-import { Card, CardContent, TextField, Checkbox, Button, FormControlLabel, Grid } from '@material-ui/core';
+import { Card, CardContent, TextField, Checkbox, Button, FormControlLabel, Grid, withStyles } from '@material-ui/core';
+import Logo from '../components/Logo';
 import './styles/Login.css';
+import { StyleRules } from '@material-ui/core/styles/withStyles'
 
+const styles = function(theme): StyleRules {
+  return ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  margin: {
+    margin: theme.spacing.unit,
+  },
+  cssFocused: {},
+  cssLabel: {
+    color: '#dadada',
+    '&$cssFocused': {
+      color: '#fafafa',
+    },
+  },
+  cssUnderline: {
+    '&:after': {
+      borderBottomColor: '#fafafa',
+    },
+  },
+  cssInput: {
+    color: '#fafafa',
+    '&:before': {
+      borderBottomColor: '#dadada',
+    },
+    '&:hover:before': {
+      borderBottom: '2px solid #dadada !important',
+    }
+  }
+})};
 class Login extends React.Component<any, any> {
   public constructor(props) {
     super(props);
@@ -83,9 +116,9 @@ class Login extends React.Component<any, any> {
     if (this.state.isNewPassword) {
       return (
         <div className="Login">
-          <Card raised style={{width: '40%', margin: '0 auto', padding: '50px 40px'}}>
+          <Card raised style={{width: '40%', maxWidth: '474px', margin: 'auto', padding: '50px 40px'}}>
             <CardContent>
-              <p className="logo">Tailor<span className="bold">Made</span></p>
+              <Logo />
               <p className="change-password-message">Welcome! Please change your password below to complete the sign-in process.</p>
               <form onSubmit={(event) => this.handlePasswordSubmit(event)}>
                 <TextField 
@@ -95,6 +128,8 @@ class Login extends React.Component<any, any> {
                   id="newPassword"
                   onChange={(event) => this.handleChange(event)}
                   margin="normal"
+                  InputLabelProps={{FormLabelClasses:{root: this.props.classes.cssLabel, focused: this.props.classes.cssFocused}}}
+                  InputProps={{classes: {underline: this.props.classes.cssUnderline, input: this.props.classes.cssInput, root: this.props.classes.cssInput}}}
                 />
                 <TextField 
                   fullWidth 
@@ -103,11 +138,13 @@ class Login extends React.Component<any, any> {
                   id="confirmNewPassword"
                   onChange={(event) => this.handleChange(event)}
                   margin="normal"
+                  InputLabelProps={{FormLabelClasses:{root: this.props.classes.cssLabel, focused: this.props.classes.cssFocused}}}
+                  InputProps={{classes: {underline: this.props.classes.cssUnderline, input: this.props.classes.cssInput, root: this.props.classes.cssInput}}}
                 />
                   <Button
                     value="login"
                     type="submit"
-                    color="primary"
+                    color="secondary"
                     variant="raised"
                     disabled={!this.validatePasswordForm()}
                     >Change Password
@@ -120,9 +157,9 @@ class Login extends React.Component<any, any> {
     }
     return (
       <div className="Login">
-        <Card raised style={{width: '40%', margin: '0 auto', padding: '50px 40px'}}>
+        <Card raised style={{width: '40%', maxWidth: '474px', margin: 'auto', padding: '40px 40px 60px', backgroundColor: '#333333'}}>
           <CardContent>
-            <p className="logo">Tailor<span className="bold">Made</span></p>
+            <Logo alt />
             <form onSubmit={(event) => this.handleSubmit(event)}>
               <TextField 
                 fullWidth
@@ -131,6 +168,8 @@ class Login extends React.Component<any, any> {
                 id="email"
                 onChange={(event) => this.handleChange(event)}
                 margin="normal"
+                InputLabelProps={{FormLabelClasses:{root: this.props.classes.cssLabel, focused: this.props.classes.cssFocused}}}
+                InputProps={{classes: {underline: this.props.classes.cssUnderline, input: this.props.classes.cssInput, root: this.props.classes.cssInput}}}
               />
               <TextField 
                 fullWidth 
@@ -139,16 +178,18 @@ class Login extends React.Component<any, any> {
                 id="password"
                 onChange={(event) => this.handleChange(event)}
                 margin="normal"
+                InputLabelProps={{FormLabelClasses:{root: this.props.classes.cssLabel, focused: this.props.classes.cssFocused}}}
+                InputProps={{classes: {underline: this.props.classes.cssUnderline, input: this.props.classes.cssInput, root: this.props.classes.cssInput}}}
               />
               <Grid container>
                 <Grid item xs={8} sm={8}>
-                  <FormControlLabel control={<Checkbox color="primary" />} label="Remember Me" />
+                  <FormControlLabel control={<Checkbox color="default" style={{color: "white"}} />} label="Remember Me" classes={{label: "remember-me"}}/>
                 </Grid>
                 <Grid item xs={4} sm={4} style={{textAlign: "right"}}>
                 <Button
                   value="login"
                   type="submit"
-                  color="primary"
+                  color="secondary"
                   variant="raised"
                   disabled={!this.validateForm()}
                   >Sign In
@@ -163,4 +204,4 @@ class Login extends React.Component<any, any> {
   }
 }
 
-export default Login;
+export default withStyles(styles)(Login);

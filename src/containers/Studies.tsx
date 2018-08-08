@@ -71,12 +71,12 @@ class Studies extends React.Component<any, any> {
   public render() {
     return ( !this.state.isLoadingList &&
       <div className="Studies">
-        <Grid container spacing={24}>
+        <Grid container spacing={32}>
           <Grid item md={8}>
-            <h2>Current Studies</h2>
+            <h1>Current Studies</h1>
           </Grid>
           <Grid item md={4} style={{textAlign: "right"}}>
-            {this.state.user.attributes['custom:unsecureRole'] === 'admin' && <Button variant="raised" color="primary">New Study</Button>}
+            {this.state.user.attributes['custom:unsecureRole'] === 'admin' && <Button variant="raised" color="secondary">New Study</Button>}
           </Grid>
           {this.state.studies.map((element, index) => 
           (<Grid key={index} item md={4}>

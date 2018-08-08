@@ -5,6 +5,8 @@ html, body {
   font-size: 16px;
   font-weight: 400;
   line-height: 19px;
+  min-height: 100%;
+  background: #fafafa;
 }
 
 /* select.form-control, textarea.form-control, input.form-control {
@@ -18,16 +20,24 @@ input[type=file] {
 h1 {
   font-size: 32px;
   line-height: 38px;
+  font-weight: 400;
   margin: 0;
   padding: 0;
 }
 
 h2 {
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 21px;
+  font-size: 25px;
+  font-weight: 400;
   margin: 0;
   padding: 0;
+}
+
+h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+  display: inline-block;
 }
 
 p.text {
@@ -42,26 +52,4 @@ p.subtext {
   line-height: 14px;
   margin: 0;
   padding: 0;
-}
-
-p.logo {
-  text-align: center;
-  font-size: 28px;
-  font-weight: 300;
-  letter-spacing: 0.1ch;
-  text-decoration: none;
-  color: #585858
-}
-
-a.logo-link {
-  text-decoration: none;
-}
-
-p.logo span {
-  font-weight: 700;
-}
-
-p.logo.header {
-  font-size: 24px;
-  text-align: left;
 }

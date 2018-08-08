@@ -1,9 +1,12 @@
 import * as React from 'react';
-import './styles/Studies.css';
+import './styles/StudyInfo.css';
 import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { GraphQLResult } from '../../node_modules/aws-amplify/lib/API/types';
-import { Grid, List, ListItem, Button, Dialog, DialogContent, DialogTitle, TextField } from '@material-ui/core';
+import { List, Button, Dialog, DialogContent, DialogTitle, TextField, Tabs, Tab, withStyles } from '@material-ui/core';
+import Search from '../components/Search';
+import ParticipantListItem from '../components/ParticipantListItem';
 import uuidv1 from 'uuid';
+import { StyleRules } from '@material-ui/core/styles/withStyles'
 
 interface StudyResult {
   data: any
@@ -15,6 +18,7 @@ class StudyInfo extends React.Component<any, any> {
     this.state = {
       study: {},
       participants: {},
+      tabIndex: 0,
       modalOpen: false,
       isLoading: true,
       firstName: "",
@@ -110,26 +114,121 @@ class StudyInfo extends React.Component<any, any> {
     });
   };
 
+  private handleTabChange = async (event, value) => {
+    event.preventDefault();
+    this.setState({
+      tabIndex: value
+    });
+  };
+
+  private getCurrentTab() {
+    switch (this.state.tabIndex) {
+      case 0:
+        return (
+          <div className="participants-wrapper">
+          <h2>Participants</h2>
+          <div className="part-li-header-wrapper">
+            <div className="part-li-header-id">
+              <h3>Study ID</h3>
+            </div>
+            <div className="part-li-header-first-name">
+              <h3>First Name</h3>
+            </div>
+            <div className="part-li-header-last-name">
+              <h3>Last Name</h3>
+            </div>
+            <div className="part-li-header-status">
+              <h3>Status</h3>
+            </div>
+            <div className="part-li-header-group">
+              <h3>Group</h3>
+            </div>
+            <div className="part-li-header-sms">
+              <h3>SMS</h3>
+            </div>
+          </div>
+            <List>
+              {this.state.participants.map((element, index) => <ParticipantListItem key={index} dark={index%2 === 1} firstName={element.firstName} lastName={element.lastName} />)}
+            </List>
+          </div>
+        );
+      case 1:
+        return (
+          <div className="groups-wrapper">
+            This is the groups tab.
+          </div>
+        );
+      case 2:
+        return (
+          <div className="messages-wrapper">
+            This is the messages tab.
+          </div>
+        );
+      case 3:
+        return (
+          <div className="calls-wrapper">
+            This is the calls tab.
+          </div>
+        );
+      default: 
+        console.log("Recieved tab index that doesn't exist.")
+        return null;
+    }
+  }
+
   public render() {
     return ( !this.state.isLoading &&
-      <div className="Studies">
-        <Grid container spacing={24}>
-          <Grid item md={12}>
-            <h2>{this.state.study.title}</h2>
-          </Grid>
-          <Grid item md={12}>
-            <List>
-              {this.state.participants.map((element, index) => <ListItem key={index}>{element.firstName} {element.lastName}</ListItem>)}
-            </List>
-            <Button
-              variant="raised"
-              color="primary"
-              onClick={(event) => {event.preventDefault(); this.setState({modalOpen: true})}}
-            >
-              Add New Participant
-            </Button>
-          </Grid>
-        </Grid>
+      <div className="StudyInfo">
+        <div className="study-info-search-wrapper">
+          <Search searchList={this.state.participants}/>
+        </div>
+        <div className="study-info-header">
+          <h1 className="study-info-title">{this.state.study.title}</h1>
+          {this.state.tabIndex === 0 && <Button
+            variant="raised"
+            color="secondary"
+            style={{width: "198px"}}
+            onClick={(event) => {event.preventDefault(); this.setState({modalOpen: true})}}
+          >
+            Add Participant
+          </Button>}
+          <Button
+            style={{width: "198px", marginLeft: "30px"}}
+            variant="outlined"
+            onClick={(event) => {event.preventDefault();}}
+          >
+            Manage Study
+          </Button>
+        </div>
+        <div className="study-info-tab-wrapper">
+          <Tabs
+            onChange={this.handleTabChange}
+            value={this.state.tabIndex}
+            indicatorColor="primary"
+          >
+            <Tab 
+              label="Participants"
+              classes={{root: this.props.classes.tabRoot, labelContainer: this.props.classes.tabLabelContainer, label: this.props.classes.tabLabel, selected: this.props.classes.tabSelected}}
+              disableRipple
+            />
+            <Tab 
+              label="Groups"
+              classes={{root: this.props.classes.tabRoot, labelContainer: this.props.classes.tabLabelContainer, label: this.props.classes.tabLabel, selected: this.props.classes.tabSelected}} 
+              disableRipple
+            />
+            <Tab 
+              label="Messages" 
+              classes={{root: this.props.classes.tabRoot, labelContainer: this.props.classes.tabLabelContainer, label: this.props.classes.tabLabel, selected: this.props.classes.tabSelected}}
+              disableRipple
+            />
+            <Tab 
+              label="Calls" 
+              classes={{root: this.props.classes.tabRoot, labelContainer: this.props.classes.tabLabelContainer, label: this.props.classes.tabLabel, selected: this.props.classes.tabSelected}}
+              disableRipple
+            />
+          </Tabs>
+        </div>
+        {this.getCurrentTab()}
         <Dialog
           open={this.state.modalOpen}
           onClose={(event) => {event.preventDefault(); this.setState({modalOpen: false, firstName: "", lastName: ""})}}
@@ -169,4 +268,30 @@ class StudyInfo extends React.Component<any, any> {
   }
 }
 
-export default StudyInfo;
+const styles = function(theme) : StyleRules {
+  return ({
+  tabRoot: {
+    textTransform: 'initial',
+    minWidth: 0,
+    minHeight: 0,
+    margin: 0,
+    padding: "5px 0",
+    marginRight: 30,
+    fontWeight: 400,
+    letterSpacing: 0,
+    color: "#333333",
+    '&$tabSelected': {
+      fontWeight: 700,
+    },
+  },
+  tabSelected: {},
+  tabLabelContainer: {
+    margin: 0,
+    padding: 0,
+  },
+  tabLabel: {
+    fontSize: "16px",
+  }
+})};
+
+export default withStyles(styles)(StudyInfo);

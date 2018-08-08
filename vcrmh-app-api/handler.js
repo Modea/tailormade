@@ -1,22 +1,11 @@
 import { resolve } from 'url';
-
 const AWS = require('aws-sdk');
-
 AWS.config.update({region: "us-east-2"});
 
+// This method is protected (Admin-Only) by an aws_auth directive in the schema for AppSync
 export const createUser = async (event, context, callback) => {
   let cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider();
-  // let iam = new AWS.IAM();
   let response = {};
-  // console.log(event);
-  // console.log(context);
-  // iam.getUser({}, function(err, data) {
-  //   if (err) {
-  //     console.log(err);
-  //   } else {
-  //     console.log(data);
-  //   }
-  // });
   if (event.arguments.input.email && event.arguments.input.role && event.arguments.input.group && event.arguments.input.name) {
     const newUser = {
       UserPoolId: "us-east-2_B9lu85cEB",
@@ -67,7 +56,7 @@ export const createUser = async (event, context, callback) => {
     response = {
       statusCode: 400,
       body: JSON.stringify({
-        message: `Missing required parameters. Ensure that the params email, firstName, lastName, group, and role are all part of the POST body.`
+        message: `Missing required parameters.`
       }),
     };
   }
@@ -182,26 +171,12 @@ export const getStudy = async (event, context, callback) => {
           }),
         }
       } else {
-      //   const queryParams = {
-      //     ExpressionAttributeValues: {
-      //       ":group": group.toString()
-      //     },
-      //     KeyConditionExpression: "groupId=:group",
-      //     ProjectionExpression: "studyId,groupId,clinicalTrialsId,title,numOfParticipants,renewDate",
-      //     TableName: "studies"
-      //   }
-  
-      //   let result = await dynamoDB.query(queryParams).promise();
-  
-      //   console.log(result);
-  
-      //   response = {
-      //     statusCode: 200,
-      //     body: JSON.stringify({
-      //       message:'Retrieved data.',
-      //       items: result.Items[0]
-      //     }),
-      //   }
+        response = {
+          statusCode: 403,
+          body: JSON.stringify({
+            message:'You do not have access permissions to perform this action.'
+          }),
+        }
       }
     } else {
       response = {
@@ -219,6 +194,7 @@ export const getStudy = async (event, context, callback) => {
   }
 }
 
+// @todo: Ensure that the user making this call has the rights to view the group.
 export const listParticipantsForStudy = async (event, context, callback) => {
   let response = {};
   let study = event.arguments.studyId;

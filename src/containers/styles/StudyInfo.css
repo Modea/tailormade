@@ -1,0 +1,69 @@
+.StudyInfo {
+  margin: 0 10% 0;
+  width: 80%;
+}
+
+.study-info-search-wrapper {
+  width: 100%;
+  margin-bottom: 86px;
+  margin-top: 17px;
+}
+
+.study-info-header {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 15px;
+}
+
+.study-info-title {
+  display: inline-flex;
+  flex-grow: 2;
+}
+
+.study-info-tab-wrapper {
+  margin-bottom: 32px;
+}
+
+.part-li-header-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  padding: 0 13px;
+  margin: 40px 0 30px;
+}
+
+.part-li-header-id {
+  width: 13%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.part-li-header-first-name {
+  width: 15%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.part-li-header-last-name {
+  width: 15%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.part-li-header-status {
+  width: 12%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.part-li-header-group {
+  width: 12%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.part-li-header-sms {
+  width: 13%;
+  text-align: center;
+}

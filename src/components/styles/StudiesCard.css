@@ -1,0 +1,43 @@
+.study-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.study-research-info {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.study-clinical-trial-id {
+  display: inline-flex;
+  flex-grow: 2;
+  justify-content: flex-end;
+  font-size: 14px;
+  color: #026682;
+}
+
+.study-avatars {
+  display: inline-flex;
+  flex-grow: 1;
+}
+
+.study-title {
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 7px;
+}
+
+.study-participants {
+  color: #026682;
+  margin-bottom: 20px;
+}
+
+.study-irb-approval {
+  margin-top: 70px;
+  margin-bottom: 3px;
+  font-size: 12px;
+}

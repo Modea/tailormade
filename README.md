@@ -2,11 +2,11 @@
 
 ## Initial Setup
 Before beginning setup ensure that you have the following installed:
-- `npm` v6.1.0+ and `node` v9.10.1+
-- `awscli`
-  - `pip install awscli --upgrade --user`
-- `serverless`
-  - `npm install -g serverless`
+* `npm` v6.1.0+ and `node` v9.10.1+
+* `awscli`
+  * http://docs.aws.amazon.com/cli/latest/userguide/installing.html
+* `serverless`
+  * `npm install -g serverless`
 
 1. Clone the repo to your local directory.
    ```
@@ -31,7 +31,10 @@ Before beginning setup ensure that you have the following installed:
 ## Creating, Updating, and Deploying Lambda functions with Serverless.
 Using the Serverless CLI will allow you to create, update and delete functions from your local environment instead of the AWS console.
 
-**Note:** You will need to be logged in to the AWS CLI to run `serverless deploy`.  To login, run `aws configure` and follow the prompts to sign in using your creditials for the environment.
+**Note:** You will need to be logged in to the AWS CLI to run `serverless deploy`.  To login, run `aws configure` and follow the prompts to sign in using your credentials for the environment. If you need programattic access keys for your user, follow the steps below.
+
+1. Sign into the AWS console.
+2. 
 
 ## Building and Deploying to CI
 *To be completed following the completion of environment/deployment pipeline setup.*

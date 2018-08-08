@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { withRouter } from 'react-router-dom';
+import { MuiThemeProvider } from '@material-ui/core';
+import { theme } from './theme';
 import { Auth } from 'aws-amplify';
 import Routes from './Routes';
 import './App.css';
@@ -50,8 +52,10 @@ class App extends React.Component<any, any> {
     return (
       !this.state.isAuthenticating &&
       <div className="App">
-        {this.state.isAuthenticated && <PageHeader handleLogout={this.handleLogout} />}
-        <Routes childProps={childProps} />
+        <MuiThemeProvider theme={theme}>
+          {this.state.isAuthenticated && <PageHeader handleLogout={this.handleLogout} />}
+          <Routes childProps={childProps} />
+        </MuiThemeProvider>
       </div>
     );
   }
