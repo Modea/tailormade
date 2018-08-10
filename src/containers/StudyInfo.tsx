@@ -148,7 +148,14 @@ class StudyInfo extends React.Component<any, any> {
             </div>
           </div>
             <List>
-              {this.state.participants.map((element, index) => <ParticipantListItem key={index} dark={index%2 === 1} firstName={element.firstName} lastName={element.lastName} />)}
+              {this.state.participants.map((element, index) => 
+                <ParticipantListItem 
+                  key={index} 
+                  dark={index%2 === 1} 
+                  firstName={element.firstName} 
+                  lastName={element.lastName} 
+                  permalink={`/studies/${this.props.match.params.id}/participant/${element.participantID}`}
+                />)}
             </List>
           </div>
         );
@@ -177,6 +184,7 @@ class StudyInfo extends React.Component<any, any> {
   }
 
   public render() {
+    console.log(this.state.participants);
     return ( !this.state.isLoading &&
       <div className="StudyInfo">
         <div className="study-info-search-wrapper">

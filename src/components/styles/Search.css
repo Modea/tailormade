@@ -57,9 +57,8 @@
 }
 
 .search-result {
-  height: 70px;
   padding: 10px;
-  border-bottom: 1px solid #979797;
+  border-bottom: 1px solid #b3b3b3;
   cursor: pointer;
 }
 

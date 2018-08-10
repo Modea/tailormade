@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { withRouter } from 'react-router';
 import './styles/ParticipantListItem.css';
 import { Paper, Switch, Button } from '@material-ui/core';
 
@@ -15,6 +16,12 @@ class ParticipantListItem extends React.Component<any, any> {
     event.stopPropagation();
     event.preventDefault();
     this.setState({expanded: !this.state.expanded})
+  }
+
+  handleClick = (event) => {
+    event.preventDefault();
+
+    this.props.history.push(`${this.props.permalink}`)
   }
 
   render() {
@@ -41,7 +48,7 @@ class ParticipantListItem extends React.Component<any, any> {
             <Switch value="id" color="primary" checked/>
           </div>
           <div className="part-li-view">
-            <Button variant="raised" color="secondary" style={{minWidth: 100}}>View</Button>
+            <Button variant="raised" color="secondary" style={{minWidth: 100}} onClick={this.handleClick}>View</Button>
           </div>
           <div className="part-li-expand">
             <i className="material-icons part-li-more" onClick={this.toggleExpansion}>more_vert</i>
@@ -53,4 +60,4 @@ class ParticipantListItem extends React.Component<any, any> {
   }
 }
 
-export default ParticipantListItem;
+export default withRouter(ParticipantListItem);

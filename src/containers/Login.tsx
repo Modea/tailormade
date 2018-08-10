@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Auth } from "aws-amplify";
-import { Card, CardContent, TextField, Checkbox, Button, FormControlLabel, Grid, withStyles } from '@material-ui/core';
+import { Card, CardContent, TextField, Checkbox, Button, FormControlLabel, Grid, withStyles, LinearProgress } from '@material-ui/core';
 import Logo from '../components/Logo';
 import './styles/Login.css';
 import { StyleRules } from '@material-ui/core/styles/withStyles'
@@ -62,7 +62,7 @@ class Login extends React.Component<any, any> {
           console.log(user);
           if (user.challengeName === "NEW_PASSWORD_REQUIRED") {
             console.log("change password");
-            this.setState({userNewPassword: user, isNewPassword: true})
+            this.setState({userNewPassword: user, isNewPassword: true, isLoading: false})
           } else {
             try {
               const userInfo = await Auth.currentAuthenticatedUser(); 
@@ -98,6 +98,8 @@ class Login extends React.Component<any, any> {
   private handlePasswordSubmit = async event => {
     event.preventDefault();
 
+    this.setState({isLoading: true});
+
     this.state.userNewPassword.completeNewPasswordChallenge(this.state.newPassword, this.state.userNewPassword.challengeParams, {
       onSuccess: async user => {
         Auth.signIn(this.state.email, this.state.newPassword).then(async (user) => {
@@ -116,7 +118,8 @@ class Login extends React.Component<any, any> {
     if (this.state.isNewPassword) {
       return (
         <div className="Login">
-          <Card raised style={{width: '40%', maxWidth: '474px', margin: 'auto', padding: '50px 40px'}}>
+          {this.state.isLoading && <LinearProgress variant="indeterminate" color="primary" style={{width: "40%", maxWidth: '474px', margin:"auto", position:"absolute", top: "0px", left: "0px"}} />}
+          <Card raised style={{width: '40%', maxWidth: '474px', margin: 'auto', padding: '50px 40px', backgroundColor: '#333333', position: "relative"}}>
             <CardContent>
               <Logo />
               <p className="change-password-message">Welcome! Please change your password below to complete the sign-in process.</p>
@@ -146,7 +149,7 @@ class Login extends React.Component<any, any> {
                     type="submit"
                     color="secondary"
                     variant="raised"
-                    disabled={!this.validatePasswordForm()}
+                    disabled={!this.validatePasswordForm() || this.state.isLoading}
                     >Change Password
                   </Button>
               </form>
@@ -157,7 +160,8 @@ class Login extends React.Component<any, any> {
     }
     return (
       <div className="Login">
-        <Card raised style={{width: '40%', maxWidth: '474px', margin: 'auto', padding: '40px 40px 60px', backgroundColor: '#333333'}}>
+        <Card raised style={{width: '40%', maxWidth: '474px', margin: 'auto', padding: '40px 40px 60px', backgroundColor: '#333333', position: "relative"}}>
+          {this.state.isLoading && <LinearProgress variant="indeterminate" color="primary" style={{width: "100%", maxWidth: '474px', margin:"auto", position:"absolute", top: "0px", left: "0px"}} />}
           <CardContent>
             <Logo alt />
             <form onSubmit={(event) => this.handleSubmit(event)}>
@@ -191,7 +195,7 @@ class Login extends React.Component<any, any> {
                   type="submit"
                   color="secondary"
                   variant="raised"
-                  disabled={!this.validateForm()}
+                  disabled={!this.validateForm() || this.state.isLoading}
                   >Sign In
                 </Button>
                 </Grid>
