@@ -53,3 +53,22 @@ p.subtext {
   margin: 0;
   padding: 0;
 }
+
+.transparent-background {
+  background: rgba(0,0,0,0) !important;
+}
+
+.field-background {
+  border-radius: 2px;
+  background: linear-gradient(to bottom, #ffffff 54px, rgba(0,0,0,0) 54px) !important;
+}
+
+.field-background-dark {
+  border-radius: 2px;
+  background: linear-gradient(to bottom, #e8e8e8 54px, rgba(0,0,0,0) 54px) !important;
+}
+
+.date-input {
+  color: transparent !important;
+  text-shadow: 0 0 0 #333333;
+}

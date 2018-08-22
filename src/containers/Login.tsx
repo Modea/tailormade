@@ -118,10 +118,10 @@ class Login extends React.Component<any, any> {
     if (this.state.isNewPassword) {
       return (
         <div className="Login">
-          {this.state.isLoading && <LinearProgress variant="indeterminate" color="primary" style={{width: "40%", maxWidth: '474px', margin:"auto", position:"absolute", top: "0px", left: "0px"}} />}
           <Card raised style={{width: '40%', maxWidth: '474px', margin: 'auto', padding: '50px 40px', backgroundColor: '#333333', position: "relative"}}>
+            {this.state.isLoading && <LinearProgress variant="indeterminate" color="primary" style={{width: "40%", maxWidth: '474px', margin:"auto", position:"absolute", top: "0px", left: "0px"}} />} 
             <CardContent>
-              <Logo />
+              <Logo alt />
               <p className="change-password-message">Welcome! Please change your password below to complete the sign-in process.</p>
               <form onSubmit={(event) => this.handlePasswordSubmit(event)}>
                 <TextField 
@@ -168,7 +168,7 @@ class Login extends React.Component<any, any> {
               <TextField 
                 fullWidth
                 label="Email"
-                type="email"
+                type="text"
                 id="email"
                 onChange={(event) => this.handleChange(event)}
                 margin="normal"

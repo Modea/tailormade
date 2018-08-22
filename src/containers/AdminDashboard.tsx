@@ -12,6 +12,7 @@ class AdminDashboard extends React.Component<any, any> {
       isLoading: false,
       name: "",
       email: "",
+      username: "",
       userRole: "select",
       userGroup: "select",
       newUser: null
@@ -38,7 +39,7 @@ class AdminDashboard extends React.Component<any, any> {
     
     const CreateUser = `
       mutation createUser {
-        createUser(input: {name:"${this.state.name}", email: "${this.state.email}", role: "${this.state.userRole}", group: "${this.state.userGroup}"}) {
+        createUser(input: {username: "${this.state.username}", name:"${this.state.name}", email: "${this.state.email}", role: "${this.state.userRole}", group: "${this.state.userGroup}"}) {
           body
         }
       }
@@ -67,6 +68,13 @@ class AdminDashboard extends React.Component<any, any> {
                 label="Name"
                 type="text"
                 name="name"
+                onChange={(event) => this.handleChange(event)}
+                margin="normal"
+              />
+              <TextField 
+                label="Username"
+                type="text"
+                name="username"
                 onChange={(event) => this.handleChange(event)}
                 margin="normal"
               />

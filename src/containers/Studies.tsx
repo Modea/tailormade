@@ -1,5 +1,6 @@
 import * as React from 'react';
 import './styles/Studies.css';
+import { withRouter } from 'react-router';
 import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { GraphQLResult } from '../../node_modules/aws-amplify/lib/API/types';
 import { Grid, Button } from '@material-ui/core';
@@ -68,6 +69,13 @@ class Studies extends React.Component<any, any> {
     }
   }
 
+  handleNewStudy = event => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    this.props.history.push('/create-new-study');
+  }
+
   public render() {
     return ( !this.state.isLoadingList &&
       <div className="Studies">
@@ -76,7 +84,7 @@ class Studies extends React.Component<any, any> {
             <h1>Current Studies</h1>
           </Grid>
           <Grid item md={4} style={{textAlign: "right"}}>
-            {this.state.user.attributes['custom:unsecureRole'] === 'admin' && <Button variant="raised" color="secondary">New Study</Button>}
+            {this.state.user.attributes['custom:unsecureRole'] === 'admin' && <Button variant="raised" color="secondary" onClick={this.handleNewStudy}>New Study</Button>}
           </Grid>
           {this.state.studies.map((element, index) => 
           (<Grid key={index} item md={4}>
@@ -96,4 +104,4 @@ class Studies extends React.Component<any, any> {
   }
 }
 
-export default Studies;
+export default withRouter(Studies);

@@ -27,28 +27,28 @@ provider:
 
 functions:
   createUser:
-    role: arn:aws:iam::424067295584:role/AdminCreateUserLambdaRole
+    role: arn:aws:iam::992525816392:role/DevAdminCreateUserLambdaRole
     handler: handler.createUser
     events:
       - http:
           path: admin/createUser
           method: post
   getStudies:
-    role: arn:aws:iam::424067295584:role/UserGetAllStudiesRole
+    role: arn:aws:iam::992525816392:role/DevStudiesReadAccessLambdaRole
     handler: handler.getStudies
     events:
       - http:
           path: getStudies
           method: post
   getStudy:
-    role: arn:aws:iam::424067295584:role/UserGetAllStudiesRole
+    role: arn:aws:iam::992525816392:role/DevStudiesReadAccessLambdaRole
     handler: handler.getStudy
     events:
       - http:
           path: getStudy
           method: post
   listParticipantsForStudy:
-    role: arn:aws:iam::424067295584:role/ListParticpantsLambdaRole
+    role: arn:aws:iam::992525816392:role/DevParticipantsAccessLambdaRole
     handler: handler.listParticipantsForStudy
     events:
       - http:

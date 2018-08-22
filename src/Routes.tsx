@@ -10,6 +10,7 @@ import StyleGuide from "./containers/StyleGuide";
 import AdminDashboard from "./containers/AdminDashboard";
 import StudyInfo from "./containers/StudyInfo"
 import ParticipantInfo from "./containers/ParticipantInfo";
+import CreateStudy from "./containers/CreateStudy";
 
 export default ({ childProps }) => 
 <Switch>
@@ -18,6 +19,7 @@ export default ({ childProps }) =>
   <AuthenticatedRoute path="/studies/:id" exact component={StudyInfo} props={childProps} />
   <AuthenticatedRoute path="/studies/:studyId/participant/:id" exact component={ParticipantInfo} props={childProps} />
   <AuthenticatedRoute path="/dashboard" exact component={AdminDashboard} props={childProps} />
+  <AuthenticatedRoute path="/create-new-study" exact component={CreateStudy} props={childProps} />
   <AppliedRoute path="/style-guide" exact component={StyleGuide} props={childProps} />
   <Route default component={NotFound} />
 </Switch>;

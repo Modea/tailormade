@@ -6,10 +6,10 @@ AWS.config.update({region: "us-east-2"});
 export const createUser = async (event, context, callback) => {
   let cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider();
   let response = {};
-  if (event.arguments.input.email && event.arguments.input.role && event.arguments.input.group && event.arguments.input.name) {
+  if (event.arguments.input.username && event.arguments.input.email && event.arguments.input.role && event.arguments.input.group && event.arguments.input.name) {
     const newUser = {
-      UserPoolId: "us-east-2_B9lu85cEB",
-      Username: event.arguments.input.email,
+      UserPoolId: "us-east-2_HSTmUYQE8",
+      Username: event.arguments.input.username,
       TemporaryPassword: 'Passw0rd!',
       DesiredDeliveryMediums: ["EMAIL"],
       UserAttributes: [
@@ -38,7 +38,7 @@ export const createUser = async (event, context, callback) => {
     const groupParams = {
       GroupName: event.arguments.input.role === 'admin' ? "Admins" : "Researchers",
       Username: user.User.Username,
-      UserPoolId: "us-east-2_B9lu85cEB"
+      UserPoolId: "us-east-2_HSTmUYQE8"
     }
 
     const groupResult = await cognitoidentityserviceprovider.adminAddUserToGroup(groupParams).promise();
@@ -72,7 +72,7 @@ export const getStudies = async (event, context, callback) => {
   let dynamoDB = new AWS.DynamoDB.DocumentClient();
 
   var params = {
-    UserPoolId: 'us-east-2_B9lu85cEB',
+    UserPoolId: 'us-east-2_HSTmUYQE8',
     Username: event.userId
   };
 
@@ -132,7 +132,7 @@ export const getStudy = async (event, context, callback) => {
   let dynamoDB = new AWS.DynamoDB.DocumentClient();
 
   var params = {
-    UserPoolId: 'us-east-2_B9lu85cEB',
+    UserPoolId: 'us-east-2_HSTmUYQE8',
     Username: event.userId
   };
 
