@@ -20,6 +20,10 @@ class ParticipantInfo extends React.Component<any, any> {
     );
   }
 
+  g
+
 }
+
+
 
 export default ParticipantInfo;
