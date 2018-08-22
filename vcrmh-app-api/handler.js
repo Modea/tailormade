@@ -93,7 +93,7 @@ export const getStudies = async (event, context, callback) => {
         },
         KeyConditionExpression: "groupId=:group",
         ProjectionExpression: "studyId,groupId,clinicalTrialsId,title,numOfParticipants,renewDate",
-        TableName: "studies"
+        TableName: "dev-studies"
       }
 
       let result = await dynamoDB.query(queryParams).promise();
@@ -156,7 +156,7 @@ export const getStudy = async (event, context, callback) => {
           },
           KeyConditionExpression: "studyId=:study",
           ProjectionExpression: "studyId,groupId,clinicalTrialsId,title,numOfParticipants,renewDate",
-          TableName: "studies"
+          TableName: "dev-studies"
         }
   
         let result = await dynamoDB.query(queryParams).promise();
@@ -206,9 +206,9 @@ export const listParticipantsForStudy = async (event, context, callback) => {
         ExpressionAttributeValues: {
           ":study": study.toString()
         },
-        KeyConditionExpression: "studyID=:study",
-        ProjectionExpression: "studyID,participantID,firstName,lastName",
-        TableName: "participants"
+        KeyConditionExpression: "studyId=:study",
+        ProjectionExpression: "studyId,participantId,firstName,lastName",
+        TableName: "dev-participants"
       }
 
       let result = await dynamoDB.query(queryParams).promise();

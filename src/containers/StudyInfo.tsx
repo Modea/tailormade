@@ -46,8 +46,8 @@ class StudyInfo extends React.Component<any, any> {
           items {
             firstName
             lastName
-            participantID
-            studyID
+            participantId
+            studyId
           }
         }
       }
@@ -71,7 +71,7 @@ class StudyInfo extends React.Component<any, any> {
 
     const CreateParticipant = `
       mutation CreateParticipant {
-        createParticipants(input: {participantID: "${id}", studyID: "${this.props.match.params.id.split(":")[0]}", firstName:"${this.state.firstName}", lastName:"${this.state.lastName}"}) {
+        createParticipants(input: {participantId: "${id}", studyId: "${this.props.match.params.id.split(":")[0]}", firstName:"${this.state.firstName}", lastName:"${this.state.lastName}"}) {
           firstName
           lastName
         }
@@ -94,8 +94,8 @@ class StudyInfo extends React.Component<any, any> {
           items {
             firstName
             lastName
-            participantID
-            studyID
+            participantId
+            studyId
           }
         }
       }
@@ -154,7 +154,7 @@ class StudyInfo extends React.Component<any, any> {
                   dark={index%2 === 1} 
                   firstName={element.firstName} 
                   lastName={element.lastName} 
-                  permalink={`/studies/${this.props.match.params.id}/participant/${element.participantID}`}
+                  permalink={`/studies/${this.props.match.params.id}/participant/${element.participantId}`}
                 />)}
             </List>
           </div>
