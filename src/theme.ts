@@ -51,7 +51,7 @@ export const theme = createMuiTheme({
     MuiInput: {
       input: {
         padding: "6px 10px 8px",
-        lineHeight: "24px",
+        lineHeight: "19px",
         width: "350px"
       },
       underline: {

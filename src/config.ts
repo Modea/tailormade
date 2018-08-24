@@ -8,5 +8,10 @@ export default {
     REGION: "us-east-2",
     USER_POOL_ID: "us-east-2_HSTmUYQE8", 
     APP_CLIENT_ID: "5lfh04orjg0if0vhbrgpt94blh"
+  },
+  storage: {
+    REGION: "us-east-2",
+    BUCKET: "arn:aws:s3:::dev-tailor-made-storage",
+    IDENTITY_POOL_ID: "us-east-2_HSTmUYQE8",
   }
 };

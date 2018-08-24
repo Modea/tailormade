@@ -17,6 +17,10 @@ Amplify.configure({
     aws_appsync_graphqlEndpoint: config.apiGateway.URL, 
     aws_appsync_region: config.apiGateway.REGION,
     aws_appsync_authenticationType: config.apiGateway.AUTH_TYPE
+  }, Storage: {
+    region: config.storage.REGION,
+    bucket: config.storage.BUCKET,
+    identityPoolId: config.storage.IDENTITY_POOL_ID
   }
 });
 

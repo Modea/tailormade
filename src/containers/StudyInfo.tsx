@@ -7,6 +7,7 @@ import Search from '../components/Search';
 import ParticipantListItem from '../components/ParticipantListItem';
 import uuidv1 from 'uuid';
 import { StyleRules } from '@material-ui/core/styles/withStyles'
+import SurveyProcessor from '../surveyProcessor';
 
 interface StudyResult {
   data: any
@@ -121,6 +122,24 @@ class StudyInfo extends React.Component<any, any> {
     });
   };
 
+  private fetchData = async (event) => {
+    fetch('https://redcap.vanderbilt.edu/api/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'token=D8A360F8001D0530E30DBD6BAB0CAF4B&content=metadata&format=json&returnFormat=json',
+      }).then(this.storeData);
+  }
+
+  private storeData = async response => {
+    let body = await response.json();
+    console.log(body);
+
+    let processor = new SurveyProcessor(body);
+    processor.processSurveyQuestions();
+  }
+
   private getCurrentTab() {
     switch (this.state.tabIndex) {
       case 0:
@@ -177,6 +196,17 @@ class StudyInfo extends React.Component<any, any> {
             This is the calls tab.
           </div>
         );
+      case 4:
+        return (
+          <div className="surveys-wrapper">
+            This is the surveys tab.
+            <Button
+              onClick={this.fetchData}
+            >
+              Fetch Data
+            </Button>
+          </div>
+        );
       default: 
         console.log("Recieved tab index that doesn't exist.")
         return null;
@@ -231,6 +261,11 @@ class StudyInfo extends React.Component<any, any> {
             />
             <Tab 
               label="Calls" 
+              classes={{root: this.props.classes.tabRoot, labelContainer: this.props.classes.tabLabelContainer, label: this.props.classes.tabLabel, selected: this.props.classes.tabSelected}}
+              disableRipple
+            />
+            <Tab 
+              label="Surveys" 
               classes={{root: this.props.classes.tabRoot, labelContainer: this.props.classes.tabLabelContainer, label: this.props.classes.tabLabel, selected: this.props.classes.tabSelected}}
               disableRipple
             />

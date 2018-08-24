@@ -54,3 +54,17 @@ functions:
       - http:
           path: listParticipants
           method: post
+  fetchREDCapSurveys:
+    role: arn:aws:iam::992525816392:role/DevSurveysAccessLambdaRole
+    handler: redcap.fetchREDCapSurveys
+    events:
+      - http:
+          path: fetchREDCapSurveys
+          method: post
+  getREDCapSurveys:
+    role: arn:aws:iam::992525816392:role/DevSurveysAccessLambdaRole
+    handler: redcap.getREDCapSurveys
+    events:
+      - http:
+          path: getREDCapSurveys
+          method: post
