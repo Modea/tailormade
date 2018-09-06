@@ -207,7 +207,7 @@ export const listParticipantsForStudy = async (event, context, callback) => {
           ":study": study.toString()
         },
         KeyConditionExpression: "studyId=:study",
-        ProjectionExpression: "studyId,participantId,firstName,lastName",
+        ProjectionExpression: "studyId,participantId,firstName,lastName,shortId,email,studyGroup,participantStatus,canRecieveSMS",
         TableName: "dev-participants"
       }
 

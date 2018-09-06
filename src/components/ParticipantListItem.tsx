@@ -9,6 +9,7 @@ class ParticipantListItem extends React.Component<any, any> {
 
     this.state = {
       expanded: false,
+      smsActive: this.props.sms
     }
   }
 
@@ -24,13 +25,20 @@ class ParticipantListItem extends React.Component<any, any> {
     this.props.history.push(`${this.props.permalink}`)
   }
 
+  handleSMSClick = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    this.setState({smsActive: !this.state.smsActive});
+  }
+
   render() {
     const surveyDetails = this.state.expanded ? <div className="survey-text">Survey results would appear here.</div> : null;
     return (
       <Paper style={this.props.dark ? {background: "#e0e0e0", marginBottom: "25px"} : {marginBottom: "25px"}}>
         <div className="part-li-wrapper">
           <div className="part-li-id">
-            N/A
+            {this.props.studyId}
           </div>
           <div className="part-li-first-name">
             {this.props.firstName}
@@ -39,13 +47,13 @@ class ParticipantListItem extends React.Component<any, any> {
             {this.props.lastName}
           </div>
           <div className="part-li-status">
-            Enrolled
+            {this.props.status}
           </div>
           <div className="part-li-group">
-            Intervention
+            {this.props.group}
           </div>
           <div className="part-li-sms">
-            <Switch value="id" color="primary" checked/>
+            <Switch value="id" color="primary" checked={this.state.smsActive} onClick={this.handleSMSClick}/>
           </div>
           <div className="part-li-view">
             <Button variant="raised" color="secondary" style={{minWidth: 100}} onClick={this.handleClick}>View</Button>

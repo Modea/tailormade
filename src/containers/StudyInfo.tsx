@@ -2,12 +2,12 @@ import * as React from 'react';
 import './styles/StudyInfo.css';
 import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { GraphQLResult } from '../../node_modules/aws-amplify/lib/API/types';
-import { List, Button, Dialog, DialogContent, DialogTitle, TextField, Tabs, Tab, withStyles } from '@material-ui/core';
+import { List, Button, Dialog, DialogContent, DialogTitle, TextField, Tabs, Tab, withStyles, CircularProgress } from '@material-ui/core';
 import Search from '../components/Search';
 import ParticipantListItem from '../components/ParticipantListItem';
 import uuidv1 from 'uuid';
-import { StyleRules } from '@material-ui/core/styles/withStyles'
-import SurveyProcessor from '../surveyProcessor';
+import { StyleRules } from '@material-ui/core/styles/withStyles';
+//import SurveyProcessor from '../surveyProcessor';
 
 interface StudyResult {
   data: any
@@ -49,6 +49,11 @@ class StudyInfo extends React.Component<any, any> {
             lastName
             participantId
             studyId
+            canRecieveSMS
+            email
+            studyGroup
+            participantStatus
+            shortId
           }
         }
       }
@@ -97,6 +102,11 @@ class StudyInfo extends React.Component<any, any> {
             lastName
             participantId
             studyId
+            canRecieveSMS
+            email
+            studyGroup
+            participantStatus
+            shortId
           }
         }
       }
@@ -123,21 +133,18 @@ class StudyInfo extends React.Component<any, any> {
   };
 
   private fetchData = async (event) => {
-    fetch('https://redcap.vanderbilt.edu/api/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: 'token=D8A360F8001D0530E30DBD6BAB0CAF4B&content=metadata&format=json&returnFormat=json',
-      }).then(this.storeData);
-  }
+    const GetSurveys = `
+    query FetchData {
+      getSurveyData(userId: "aalderman", studyId: "DwMLAgMACAU") {
+        body
+      }
+    }`;
 
-  private storeData = async response => {
-    let body = await response.json();
-    console.log(body);
-
-    let processor = new SurveyProcessor(body);
-    processor.processSurveyQuestions();
+    const surveys = await API.graphql(graphqlOperation(GetSurveys));
+    console.log(surveys);
+    if ((surveys as GraphQLResult).data !== undefined) {
+      this.setState({surveys:JSON.parse((surveys as StudyResult).data.getSurveyData.body)});
+    }
   }
 
   private getCurrentTab() {
@@ -174,6 +181,10 @@ class StudyInfo extends React.Component<any, any> {
                   firstName={element.firstName} 
                   lastName={element.lastName} 
                   permalink={`/studies/${this.props.match.params.id}/participant/${element.participantId}`}
+                  studyId={element.shortId}
+                  group={element.studyGroup}
+                  status={element.participantStatus}
+                  sms={element.canRecieveSMS}
                 />)}
             </List>
           </div>
@@ -214,7 +225,14 @@ class StudyInfo extends React.Component<any, any> {
   }
 
   public render() {
-    console.log(this.state.participants);
+    console.log(this.state.surveys);
+    if (this.state.isLoading) {
+      return (
+        <div className="loading-wrapper">
+          <CircularProgress color="primary"/>
+        </div>
+      );
+    }
     return ( !this.state.isLoading &&
       <div className="StudyInfo">
         <div className="study-info-search-wrapper">

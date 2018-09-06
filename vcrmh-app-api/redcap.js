@@ -103,7 +103,7 @@ export const fetchREDCapSurveys = async (event, context, callback) => {
     if (group !== null && role !== null) {
       if (role === 'admin') {
         // First get and process the survey data.
-        console.log("attempting got()");
+        // console.log("attempting got()");
         let data = await got('https://redcap.vanderbilt.edu/api/', {
           method: 'POST',
           headers: {

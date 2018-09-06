@@ -96,9 +96,9 @@ class AdminDashboard extends React.Component<any, any> {
                     id: 'userRole',
                   }}
                 >
-                  <MenuItem value="select">Select an option...</MenuItem>
-                  <MenuItem value="admin">Admin</MenuItem>
-                  <MenuItem value="researcher">Research Assistant</MenuItem>
+                  <MenuItem dense value="select">Select an option...</MenuItem>
+                  <MenuItem dense value="admin">Admin</MenuItem>
+                  <MenuItem dense value="researcher">Research Assistant</MenuItem>
                 </Select>
               </FormControl>
               <FormControl>
@@ -112,9 +112,9 @@ class AdminDashboard extends React.Component<any, any> {
                     id: 'userGroup',
                   }}
                 >
-                  <MenuItem value="select">Select an option...</MenuItem>
-                  <MenuItem value="0">Vanderbilt</MenuItem>
-                  <MenuItem value="1">University of Miami</MenuItem>
+                  <MenuItem dense value="select">Select an option...</MenuItem>
+                  <MenuItem dense value="0">Vanderbilt</MenuItem>
+                  <MenuItem dense value="1">University of Miami</MenuItem>
                 </Select>
               </FormControl>
               <Button

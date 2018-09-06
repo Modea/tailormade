@@ -12,6 +12,7 @@ import StudyInfo from "./containers/StudyInfo"
 import ParticipantInfo from "./containers/ParticipantInfo";
 import CreateStudy from "./containers/CreateStudy";
 import FitbitCode from "./containers/FitbitCode";
+import ManageStudy from "./containers/ManageStudy";
 
 export default ({ childProps }) => 
 <Switch>
@@ -19,6 +20,7 @@ export default ({ childProps }) =>
   <AuthenticatedRoute path="/studies" exact component={Studies} props={childProps} />
   <AuthenticatedRoute path="/studies/:id" exact component={StudyInfo} props={childProps} />
   <AuthenticatedRoute path="/studies/:studyId/participant/:id" exact component={ParticipantInfo} props={childProps} />
+  <AuthenticatedRoute path="/studies/:id/manage-study" exact component={ManageStudy} props={childProps} />
   <AuthenticatedRoute path="/dashboard" exact component={AdminDashboard} props={childProps} />
   <AuthenticatedRoute path="/create-new-study" exact component={CreateStudy} props={childProps} />
   <AuthenticatedRoute path="/fitbitcode" exact component={FitbitCode} props={childProps} />

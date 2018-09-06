@@ -56,12 +56,16 @@ function createNewGroup(element) {
 function addQuestionToCurrentGroup(element) {
   if (
     element["field_type"] !== "text" &&
-    element["field_type"] !== "calc"
+    element["field_type"] !== "calc" &&
+    element["field_type"] !== "yesno"
   ) {
     var choices = [];
     var splitArray = element["select_choices_or_calculations"].split(" | ");
     splitArray.map(element => {
-      choices[element.split(", ")[0]] = element.split(", ")[1];
+      choices.push({
+        key: element.split(", ")[0], 
+        value: element.split(", ")[1]
+      });
     });
     currentMatrixGroup.questions.push({
       name: element["field_name"] !== "" ? element["field_name"] : "N/A",
@@ -83,12 +87,16 @@ function addQuestionToCurrentGroup(element) {
 function addQuestionToSurvey(element) {
   if (
     element["field_type"] !== "text" &&
-    element["field_type"] !== "calc"
+    element["field_type"] !== "calc" &&
+    element["field_type"] !== "yesno"
   ) {
     var choices = [];
     var splitArray = element["select_choices_or_calculations"].split(" | ");
     splitArray.map(element => {
-      choices[element.split(", ")[0]] = element.split(", ")[1];
+      choices.push({
+        key: element.split(", ")[0], 
+        value: element.split(", ")[1]
+      });
     });
     surveyObject.push({
       name: element["field_name"] !== "" ? element["field_name"] : "N/A",

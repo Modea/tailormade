@@ -3,7 +3,7 @@ import './styles/Studies.css';
 import { withRouter } from 'react-router';
 import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { GraphQLResult } from '../../node_modules/aws-amplify/lib/API/types';
-import { Grid, Button } from '@material-ui/core';
+import { Grid, Button, CircularProgress } from '@material-ui/core';
 import StudiesCard from '../components/StudiesCard';
 
 interface StudiesResult {
@@ -77,6 +77,13 @@ class Studies extends React.Component<any, any> {
   }
 
   public render() {
+    if (this.state.isLoadingList) {
+      return (
+        <div className="loading-wrapper">
+          <CircularProgress color="primary"/>
+        </div>
+      );
+    }
     return ( !this.state.isLoadingList &&
       <div className="Studies">
         <Grid container spacing={32}>

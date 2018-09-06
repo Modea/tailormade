@@ -67,9 +67,15 @@
 }
 
 .search-result:hover {
-  background: #d8ab4c;
+  background: rgba(230, 186, 65, 0.7);
 }
 
 .search-no-results {
   padding: 10px;
+}
+
+.search-participant-details {
+  margin-top: 5px;
+  color: #333333;
+  font-size: 12px;
 }
