@@ -27,6 +27,30 @@ export const theme = createMuiTheme({
     }
   },
   overrides: {
+    MuiTab: {
+      root: {
+        textTransform: 'initial',
+        minWidth: 0,
+        minHeight: 0,
+        margin: 0,
+        padding: "5px 0",
+        marginRight: 30,
+        fontWeight: 400,
+        letterSpacing: 0,
+        color: "#333333",
+        '&$tabSelected': {
+          fontWeight: 700,
+        },
+      },
+      selected: {},
+      labelContainer: {
+        margin: 0,
+        padding: 0,
+      },
+      label: {
+        fontSize: "16px",
+      },
+    },
     MuiFormLabel: {
       root: {
         fontWeight: 400,

@@ -6,3 +6,37 @@
   width: 100%;
   text-align: center;
 }
+
+.manage-study-key-header {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  font-weight: 500;
+}
+
+.manage-study-key-item {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  align-items:  center;
+}
+
+.key-item-name {
+  width: 25%;
+  overflow: hidden;
+}
+
+.key-item-key {
+  width: 25%;
+  overflow: hidden;
+}
+
+.key-item-type {
+  width: 15%;
+  overflow: hidden;
+}
+
+.key-item-id {
+  width: 15%;
+  overflow: hidden;
+}

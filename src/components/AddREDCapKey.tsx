@@ -15,7 +15,8 @@ import {
   IconButton
 } from "@material-ui/core";
 import * as got from "got";
-// import { Auth, API, graphqlOperation } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
+import { GraphQLResult } from 'aws-amplify/lib/API/types';
 
 enum AddREDCapKeyState {
   ENTER_KEY,
@@ -158,10 +159,26 @@ class AddREDCapKey extends React.Component<any, any> {
         REDCapSnackbar: true
       });
     } else if (result === "SUCCESS") {
+      const AddAPIKey = `mutation AddAPIKey {
+        addREDCapAPIKey(input: {studyId: "${this.props.study}", apiKey: "${this.state.REDCapKey}", friendlyName: "${this.state.REDCapName}", type: "${this.state.REDCapType}", participantIdField: "${this.state.REDCapPartId}"}) {
+          studyId
+          surveyId
+        }
+      }`;
+
+      const apiKey = await API.graphql(graphqlOperation(AddAPIKey));
+      
+      if ((apiKey as GraphQLResult).data !== undefined) {
+        console.log(apiKey);
+      }
+
       this.setState({
-        REDCapSnackbarMessage: "Successfully added API key.",
+        REDCapSnackbarMessage: "Successfully added API key and survey.",
         REDCapSnackbar: true
       });
+
+      this.props.onAddKey();
+
       this.closeAddNewREDCapKey(null);
     }
   };

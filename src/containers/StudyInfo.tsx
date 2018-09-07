@@ -2,11 +2,12 @@ import * as React from 'react';
 import './styles/StudyInfo.css';
 import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { GraphQLResult } from '../../node_modules/aws-amplify/lib/API/types';
-import { List, Button, Dialog, DialogContent, DialogTitle, TextField, Tabs, Tab, withStyles, CircularProgress } from '@material-ui/core';
+import { List, Button, Dialog, DialogContent, DialogTitle, TextField, Tabs, Tab, CircularProgress } from '@material-ui/core';
 import Search from '../components/Search';
 import ParticipantListItem from '../components/ParticipantListItem';
 import uuidv1 from 'uuid';
-import { StyleRules } from '@material-ui/core/styles/withStyles';
+import { withRouter } from 'react-router';
+//import { StyleRules } from '@material-ui/core/styles/withStyles';
 //import SurveyProcessor from '../surveyProcessor';
 
 interface StudyResult {
@@ -132,6 +133,13 @@ class StudyInfo extends React.Component<any, any> {
     });
   };
 
+  private handleManageStudyClick = event => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    this.props.history.push(`${this.props.match.params.id}/manage-study`);
+  }
+
   private fetchData = async (event) => {
     const GetSurveys = `
     query FetchData {
@@ -251,7 +259,7 @@ class StudyInfo extends React.Component<any, any> {
           <Button
             style={{width: "198px", marginLeft: "30px"}}
             variant="outlined"
-            onClick={(event) => {event.preventDefault();}}
+            onClick={this.handleManageStudyClick}
           >
             Manage Study
           </Button>
@@ -264,27 +272,22 @@ class StudyInfo extends React.Component<any, any> {
           >
             <Tab 
               label="Participants"
-              classes={{root: this.props.classes.tabRoot, labelContainer: this.props.classes.tabLabelContainer, label: this.props.classes.tabLabel, selected: this.props.classes.tabSelected}}
               disableRipple
             />
             <Tab 
               label="Groups"
-              classes={{root: this.props.classes.tabRoot, labelContainer: this.props.classes.tabLabelContainer, label: this.props.classes.tabLabel, selected: this.props.classes.tabSelected}} 
               disableRipple
             />
             <Tab 
               label="Messages" 
-              classes={{root: this.props.classes.tabRoot, labelContainer: this.props.classes.tabLabelContainer, label: this.props.classes.tabLabel, selected: this.props.classes.tabSelected}}
               disableRipple
             />
             <Tab 
               label="Calls" 
-              classes={{root: this.props.classes.tabRoot, labelContainer: this.props.classes.tabLabelContainer, label: this.props.classes.tabLabel, selected: this.props.classes.tabSelected}}
               disableRipple
             />
             <Tab 
               label="Surveys" 
-              classes={{root: this.props.classes.tabRoot, labelContainer: this.props.classes.tabLabelContainer, label: this.props.classes.tabLabel, selected: this.props.classes.tabSelected}}
               disableRipple
             />
           </Tabs>
@@ -329,30 +332,4 @@ class StudyInfo extends React.Component<any, any> {
   }
 }
 
-const styles = function(theme) : StyleRules {
-  return ({
-  tabRoot: {
-    textTransform: 'initial',
-    minWidth: 0,
-    minHeight: 0,
-    margin: 0,
-    padding: "5px 0",
-    marginRight: 30,
-    fontWeight: 400,
-    letterSpacing: 0,
-    color: "#333333",
-    '&$tabSelected': {
-      fontWeight: 700,
-    },
-  },
-  tabSelected: {},
-  tabLabelContainer: {
-    margin: 0,
-    padding: 0,
-  },
-  tabLabel: {
-    fontSize: "16px",
-  }
-})};
-
-export default withStyles(styles)(StudyInfo);
+export default withRouter(StudyInfo);
