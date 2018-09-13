@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { API, graphqlOperation } from 'aws-amplify';
 
 class FitbitCode extends React.Component<any, any> {
     constructor(props) {
@@ -41,6 +42,7 @@ class FitbitCode extends React.Component<any, any> {
           let access_token = json.access_token;
           let refresh_token = json.refresh_token;
           console.log(access_token+" "+refresh_token);
+          this.saveTokens(refresh_token, access_token, participentID, studyID );
         })
         console.log(body);
 
@@ -48,6 +50,29 @@ class FitbitCode extends React.Component<any, any> {
 
       return 'getAccessToken';
     }
+
+    public async saveTokens(renewToken: string, accessToken: string, participentID: string, studyID: string){
+      
+      const SaveTokens = `
+        mutation SetFitBitData {
+          updateParticipants(input: {studyId: "${studyID}", participantId: "${participentID}", fitbitRenewToken:"${renewToken}", fitbitAccessToken:"${accessToken}"}) {
+            fitbitRenewToken
+            fitbitAccessToken
+            participantId
+            studyId
+          }
+        }
+      `;
+
+     
+      console.log(SaveTokens);
+  
+      const studies = await API.graphql(graphqlOperation(SaveTokens));
+      console.log(studies);
+  
+      
+    };
+
   }
   
   export default FitbitCode;
