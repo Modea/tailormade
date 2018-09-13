@@ -2,8 +2,6 @@ import * as React from 'react';
 import './styles/StyleGuide.css';
 import { Table } from 'react-bootstrap';
 import { Card, CardContent, TextField, Checkbox, Button, FormControlLabel, Grid } from '@material-ui/core';
-import Heading from '../components/styled/Heading';
-import Text from '../components/styled/Text';
 
 
 class StyleGuide extends React.Component<any, any> {
@@ -41,20 +39,20 @@ class StyleGuide extends React.Component<any, any> {
           </thead>
           <tbody>
             <tr>
-              <td><Heading>Example Text</Heading></td>
-              <td><code>{'<Heading>Example Text</Heading>'}</code></td>
+              <td><h1>Example Text</h1></td>
+              <td><code>{'<h1>Example Text</h1>'}</code></td>
             </tr>
             <tr>
-              <td><Heading subhead>Example Text</Heading></td>
-              <td><code>{'<Heading subhead>Example Text</Heading>'}</code></td>
+              <td><h2>Example Text</h2></td>
+              <td><code>{'<h2>Example Text</h2>'}</code></td>
             </tr>
             <tr>
-              <td><Text>Example Text</Text></td>
-              <td><code>{'<Text>Example Text</Text>'}</code></td>
+              <td><p>Example Text</p></td>
+              <td><code>{'<p>Example Text</p>'}</code></td>
             </tr>
             <tr>
-              <td><Text subtext>Example Text</Text></td>
-              <td><code>{'<Text subtext>Example Text</Text>'}</code></td>
+              <td><p>Example Text</p></td>
+              <td><code>{'<p>Example Text</p>'}</code></td>
             </tr>
           </tbody>
         </Table>

@@ -1,6 +1,5 @@
 import * as React from "react";
 import "./styles/AdminDashboard.css";
-import Heading from "../components/styled/Heading";
 import { TextField, Select, Button, FormControl, InputLabel, MenuItem } from '@material-ui/core';
 import { API, graphqlOperation } from 'aws-amplify';
 import { GraphQLResult } from '../../node_modules/aws-amplify/lib/API/types';
@@ -58,10 +57,10 @@ class AdminDashboard extends React.Component<any, any> {
   public render() {
     return (
       <div className="AdminDashboard">
-        <Heading>Admin Dashboard</Heading>
+        <h1>Admin Dashboard</h1>
         <br />
         <br />
-        <Heading subhead>Create New User</Heading>
+        <h2>Create New User</h2>
         <hr />
         <form onSubmit={(event) => this.handleSubmit(event)}>
               <TextField 

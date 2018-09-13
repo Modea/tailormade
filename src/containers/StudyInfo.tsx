@@ -7,6 +7,8 @@ import Search from '../components/Search';
 import ParticipantListItem from '../components/ParticipantListItem';
 import uuidv1 from 'uuid';
 import { withRouter } from 'react-router';
+import * as participantSort from '../util/participantSort';
+import SurveyQuestionList from '../components/SurveyQuestionList';
 //import { StyleRules } from '@material-ui/core/styles/withStyles';
 //import SurveyProcessor from '../surveyProcessor';
 
@@ -20,6 +22,10 @@ class StudyInfo extends React.Component<any, any> {
     this.state = {
       study: {},
       participants: {},
+      sort: { 
+        by: "shortId", 
+        order: "asc"
+      },
       tabIndex: 0,
       modalOpen: false,
       isLoading: true,
@@ -34,6 +40,7 @@ class StudyInfo extends React.Component<any, any> {
     this.setState({user})
 
     if (user) {
+      await this.fetchSurveyData();
       // this.props.match.params.id
       const GetStudy = `
       query GetStudy {
@@ -64,7 +71,9 @@ class StudyInfo extends React.Component<any, any> {
       const participants = await API.graphql(graphqlOperation(GetParticipants));
       console.log(participants);
       if ((study as GraphQLResult).data !== undefined) {
-        this.setState({study: (study as StudyResult).data.getStudies, participants:(participants as StudyResult).data.listParticipantsForStudy.items, isLoading: false});
+        let participantList = (participants as StudyResult).data.listParticipantsForStudy.items;
+        participantList.sort(participantSort.sortById);
+        this.setState({study: (study as StudyResult).data.getStudies, participants:participantList, isLoading: false});
       }
     } else {
 
@@ -140,19 +149,128 @@ class StudyInfo extends React.Component<any, any> {
     this.props.history.push(`${this.props.match.params.id}/manage-study`);
   }
 
-  private fetchData = async (event) => {
-    const GetSurveys = `
-    query FetchData {
-      getSurveyData(userId: "aalderman", studyId: "DwMLAgMACAU") {
-        body
+  private fetchSurveyData = async () => {
+    const GetSurveys = `query GetSurveyDetails {
+      getSurveyDetails(studyId: "${this.props.match.params.id.split(":")[0]}") {
+        items {
+          surveyId
+          studyId
+          surveyObject {
+            choices
+            label
+            name
+            type
+            groupName
+            form
+            questions {
+              choices
+              label
+              name
+              type
+              groupName
+              form
+            }
+          }
+          friendlyName
+        }
       }
     }`;
 
     const surveys = await API.graphql(graphqlOperation(GetSurveys));
     console.log(surveys);
     if ((surveys as GraphQLResult).data !== undefined) {
-      this.setState({surveys:JSON.parse((surveys as StudyResult).data.getSurveyData.body)});
+      this.setState({surveys:((surveys as StudyResult).data.getSurveyDetails.items)});
     }
+  }
+
+  private getSortIcon(columnName) {
+    if (columnName === this.state.sort.by) {
+      if (this.state.sort.order === "asc") {
+        return (
+          <div className="sort-icon-wrapper">
+            <i className="material-icons sort-icon">keyboard_arrow_up</i>
+          </div>
+        );
+      } else {
+        return (
+          <div className="sort-icon-wrapper">
+            <i className="material-icons sort-icon">keyboard_arrow_down</i>
+          </div>
+        );
+      }
+    } else {
+      return null;
+    }
+  }
+
+  private handleSortColumn = (columnName) => {
+    if (columnName !== this.state.sort.by) {
+      this.setState({
+        sort: {
+          by: columnName,
+          order: "asc"
+        }
+      });
+      this.sortParticipants(columnName, "asc");
+    } else {
+      this.setState({
+        sort: {
+          by: columnName,
+          order: (this.state.sort.order === "asc" ? "desc" : "asc")
+        }
+      });
+      this.sortParticipants(columnName, (this.state.sort.order === "asc" ? "desc" : "asc"));
+    }
+  }
+
+  private sortParticipants = (by, order) => {
+    let participantList = new Array();
+    
+    this.state.participants.forEach(element => {
+      participantList.push(element);
+    });
+
+    switch (by) {
+      case "shortId":
+        if (order === "asc") {
+          participantList.sort(participantSort.sortById);
+        } else {
+          participantList.sort((a, b) => {return -1 * participantSort.sortById(a, b)});
+        }
+        break;
+      case "firstName":
+        if (order === "asc") {
+          participantList.sort(participantSort.sortByFirstName);
+        } else {
+          participantList.sort((a, b) => {return -1 * participantSort.sortByFirstName(a, b)});
+        }
+        break;
+      case "lastName":
+        if (order === "asc") {
+          participantList.sort(participantSort.sortByLastName);
+        } else {
+          participantList.sort((a, b) => {return -1 * participantSort.sortByLastName(a, b)});
+        }
+        break;
+      case "studyGroup":
+        if (order === "asc") {
+          participantList.sort(participantSort.sortByGroup);
+        } else {
+          participantList.sort((a, b) => {return -1 * participantSort.sortByGroup(a, b)});
+        }
+        break;
+      case "participantStatus":
+        if (order === "asc") {
+          participantList.sort(participantSort.sortByStatus);
+        } else {
+          participantList.sort((a, b) => {return -1 * participantSort.sortByStatus(a, b)});
+        }
+        break;
+    }
+
+    this.setState({
+      participants: participantList
+    });
   }
 
   private getCurrentTab() {
@@ -162,20 +280,25 @@ class StudyInfo extends React.Component<any, any> {
           <div className="participants-wrapper">
           <h2>Participants</h2>
           <div className="part-li-header-wrapper">
-            <div className="part-li-header-id">
+            <div className="part-li-header-id" onClick={(event) => {this.handleSortColumn("shortId");}}>
               <h3>Study ID</h3>
+              {this.getSortIcon("shortId")}
             </div>
-            <div className="part-li-header-first-name">
+            <div className="part-li-header-first-name" onClick={(event) => {this.handleSortColumn("firstName");}}>
               <h3>First Name</h3>
+              {this.getSortIcon("firstName")}
             </div>
-            <div className="part-li-header-last-name">
+            <div className="part-li-header-last-name" onClick={(event) => {this.handleSortColumn("lastName");}}>
               <h3>Last Name</h3>
+              {this.getSortIcon("lastName")}
             </div>
-            <div className="part-li-header-status">
+            <div className="part-li-header-status" onClick={(event) => {this.handleSortColumn("participantStatus");}}>
               <h3>Status</h3>
+              {this.getSortIcon("participantStatus")}
             </div>
-            <div className="part-li-header-group">
+            <div className="part-li-header-group" onClick={(event) => {this.handleSortColumn("studyGroup");}}>
               <h3>Group</h3>
+              {this.getSortIcon("studyGroup")}
             </div>
             <div className="part-li-header-sms">
               <h3>SMS</h3>
@@ -216,24 +339,37 @@ class StudyInfo extends React.Component<any, any> {
           </div>
         );
       case 4:
-        return (
-          <div className="surveys-wrapper">
-            This is the surveys tab.
-            <Button
-              onClick={this.fetchData}
-            >
-              Fetch Data
-            </Button>
-          </div>
-        );
+        return this.getSurveyTab();
       default: 
         console.log("Recieved tab index that doesn't exist.")
         return null;
     }
   }
 
+  private getSurveyTab = () => {
+    if (this.state.surveys.length > 0) {
+      return (
+        <div className="surveys-wrapper">
+          <div className="surveys-selector">
+            {this.state.surveys.map((element, index) => 
+              <div className="survey-selector-item selected" key={index}>{element.friendlyName}</div>
+            )}
+          </div>
+          <div className="survey-details-wrapper">
+            <SurveyQuestionList questionList={this.state.surveys[0].surveyObject} />
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="surveys-wrapper">
+          No survey data found for this study.
+        </div>
+      );
+    }
+  }
+
   public render() {
-    console.log(this.state.surveys);
     if (this.state.isLoading) {
       return (
         <div className="loading-wrapper">
@@ -244,7 +380,7 @@ class StudyInfo extends React.Component<any, any> {
     return ( !this.state.isLoading &&
       <div className="StudyInfo">
         <div className="study-info-search-wrapper">
-          <Search searchList={this.state.participants}/>
+          <Search searchList={this.state.participants} study={this.props.match.params.id}/>
         </div>
         <div className="study-info-header">
           <h1 className="study-info-title">{this.state.study.title}</h1>

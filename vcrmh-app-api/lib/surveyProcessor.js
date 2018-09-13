@@ -3,6 +3,9 @@ let currentMatrixGroupName = "";
 let surveyObject = [];
 
 export default function processSurveyQuestions(rawData) {
+  currentMatrixGroup = null;
+  currentMatrixGroupName = "";
+  surveyObject = [];
 
   rawData.map((element, index) => {
     if (currentMatrixGroup) {
@@ -44,8 +47,10 @@ function pushGroup() {
 
 function createNewGroup(element) {
   currentMatrixGroup = {
-    name: element["matrix_group_name"] !== "" ? element["matrix_group_name"] : "N/A",
+    name: element["field_name"] !== "" ? element["field_name"] : "N/A",
     label: element["section_header"] !== "" ? element["section_header"] : "N/A",
+    form: element["form_name"] !== "" ? element["form_name"] : "N/A",
+    groupName: element["matrix_group_name"] !== "" ? element["matrix_group_name"] : "N/A",
     questions: [],
     type: "group"
   };
@@ -71,6 +76,7 @@ function addQuestionToCurrentGroup(element) {
       name: element["field_name"] !== "" ? element["field_name"] : "N/A",
       label: element["field_label"] !== "" ? element["field_label"] : "N/A",
       type: element["field_type"] !== "" ? element["field_type"] : "N/A",
+      form: element["form_name"] !== "" ? element["form_name"] : "N/A",
       choices,
       groupName: element["matrix_group_name"] !== "" ? element["matrix_group_name"] : "N/A"
     });
@@ -79,6 +85,7 @@ function addQuestionToCurrentGroup(element) {
       name: element["field_name"] !== "" ? element["field_name"] : "N/A",
       label: element["field_label"] !== "" ? element["field_label"] : "N/A",
       type: element["field_type"] !== "" ? element["field_type"] : "N/A",
+      form: element["form_name"] !== "" ? element["form_name"] : "N/A",
       groupName: element["matrix_group_name"] !== "" ? element["matrix_group_name"] : "N/A"
     });
   }
@@ -103,14 +110,16 @@ function addQuestionToSurvey(element) {
       label: element["field_label"] !== "" ? element["field_label"] : "N/A",
       type: element["field_type"] !== "" ? element["field_type"] : "N/A",
       choices,
-      groupName: element["matrix_group_name"] !== "" ? element["matrix_group_name"] : "N/A"
+      groupName: element["matrix_group_name"] !== "" ? element["matrix_group_name"] : "N/A",
+      form: element["form_name"] !== "" ? element["form_name"] : "N/A",
     });
   } else {
     surveyObject.push({
       name: element["field_name"] !== "" ? element["field_name"] : "N/A",
       label: element["field_label"] !== "" ? element["field_label"] : "N/A",
       type: element["field_type"] !== "" ? element["field_type"] : "N/A",
-      groupName: element["matrix_group_name"] !== "" ? element["matrix_group_name"] : "N/A"
+      groupName: element["matrix_group_name"] !== "" ? element["matrix_group_name"] : "N/A",
+      form: element["form_name"] !== "" ? element["form_name"] : "N/A",
     });
   }
 }

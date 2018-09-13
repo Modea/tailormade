@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as Fuse from "fuse.js";
 import "./styles/Search.css";
+import { withRouter } from 'react-router';
 
 const MINIMUM_TERM_LENGTH = 3;
 
@@ -61,14 +62,17 @@ class Search extends React.Component<any, any> {
   };
 
   handleFocus = event => {
-    event.preventDefault();
     this.setState({ hideSearchResults: false });
   };
 
   handleBlur = event => {
-    event.preventDefault();
     this.setState({ hideSearchResults: true });
   };
+
+  handleResultClick = (id) => {
+    console.log("THIS");
+    this.props.history.push(`/studies/${this.props.study}/participant/${id}`);
+  }
 
   render() {
     let searchResultsBox;
@@ -80,7 +84,7 @@ class Search extends React.Component<any, any> {
         <div className="search-results-wrapper">
           {this.state.searchResults.length > 0 ? (
             this.state.searchResults.map((element, index) => (
-              <div key={index} className="search-result">
+              <div key={index} className="search-result" onClick={(event) => this.handleResultClick(element.participantId)}>
                 <div className="search-name">
                   {element.firstName} {element.lastName}
                 </div>
@@ -111,7 +115,6 @@ class Search extends React.Component<any, any> {
             onChange={this.handleChange}
             value={this.state.searchTerm}
             onFocus={this.handleFocus}
-            onBlur={this.handleBlur}
           />
           <button className="search-button" type="submit">
             <i className="material-icons search-icon">search</i>
@@ -123,4 +126,4 @@ class Search extends React.Component<any, any> {
   }
 }
 
-export default Search;
+export default withRouter(Search);

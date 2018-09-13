@@ -167,9 +167,13 @@ class AddREDCapKey extends React.Component<any, any> {
       }`;
 
       const apiKey = await API.graphql(graphqlOperation(AddAPIKey));
+
+      let surveyId = null;
+      let studyId = null;
       
       if ((apiKey as GraphQLResult).data !== undefined) {
-        console.log(apiKey);
+        surveyId = (apiKey as any).data.addREDCapAPIKey.surveyId;
+        studyId = (apiKey as any).data.addREDCapAPIKey.studyId;
       }
 
       this.setState({
@@ -180,6 +184,16 @@ class AddREDCapKey extends React.Component<any, any> {
       this.props.onAddKey();
 
       this.closeAddNewREDCapKey(null);
+
+      const FetchSurvey = `mutation FetchSurveyData {
+        fetchSurveyData(studyId: "${studyId}", surveyId: "${surveyId}") {
+          body
+        }
+      }`
+
+      const surveyData = await API.graphql(graphqlOperation(FetchSurvey));
+
+      console.log(surveyData);
     }
   };
 

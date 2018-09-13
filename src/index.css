@@ -72,3 +72,14 @@ p.subtext {
   color: transparent !important;
   text-shadow: 0 0 0 #333333;
 }
+
+a {
+  color: #026682;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+}
+
+a:hover {
+  color: #026682;
+  cursor: pointer;
+}

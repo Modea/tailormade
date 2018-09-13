@@ -1,5 +1,7 @@
 .ManageStudy {
-  margin: 120px 10% 0;
+  margin: 80px 10% 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .loading-dialog-wrapper {
@@ -7,36 +9,15 @@
   text-align: center;
 }
 
-.manage-study-key-header {
-  display: flex;
-  flex-direction: row;
-  width: 80%;
-  font-weight: 500;
+.manage-study-back {
+  margin: 0 0 50px;
 }
 
-.manage-study-key-item {
-  display: flex;
-  flex-direction: row;
-  width: 80%;
-  align-items:  center;
+.manage-study-header {
+  margin: 0 0 15px;
 }
 
-.key-item-name {
-  width: 25%;
-  overflow: hidden;
-}
-
-.key-item-key {
-  width: 25%;
-  overflow: hidden;
-}
-
-.key-item-type {
-  width: 15%;
-  overflow: hidden;
-}
-
-.key-item-id {
-  width: 15%;
-  overflow: hidden;
+.manage-study-tab-container {
+  width: 100%;
+  margin: 0;
 }

@@ -37,33 +37,84 @@
   width: 13%;
   text-align: left;
   cursor: pointer;
+  flex-direction: row;
+  display: inline-flex;
+  align-items: center;
 }
 
 .part-li-header-first-name {
   width: 15%;
   text-align: left;
   cursor: pointer;
+  flex-direction: row;
+  display: inline-flex;
+  align-items: center;
 }
 
 .part-li-header-last-name {
   width: 15%;
   text-align: left;
   cursor: pointer;
+  flex-direction: row;
+  display: inline-flex;
+  align-items: center;
 }
 
 .part-li-header-status {
   width: 12%;
   text-align: left;
   cursor: pointer;
+  flex-direction: row;
+  display: inline-flex;
+  align-items: center;
 }
 
 .part-li-header-group {
   width: 12%;
   text-align: left;
   cursor: pointer;
+  flex-direction: row;
+  display: inline-flex;
+  align-items: center;
 }
 
 .part-li-header-sms {
   width: 13%;
   text-align: center;
+}
+
+.sort-icon-wrapper {
+  color: #026682;
+  margin-left: 5px;
+}
+
+.sort-icon {
+  font-size: 35px;
+}
+
+.surveys-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.surveys-selector {
+  width: 20%;
+}
+
+.survey-selector-item {
+  cursor: pointer;
+  width: auto;
+  display: inline-block;
+  padding-bottom: 2px;
+}
+
+.survey-selector-item.selected {
+  cursor: default;
+  border-bottom: solid 2px #026682;
+  font-weight: 700;
+}
+
+.survey-details-wrapper {
+  width: 80%;
 }
