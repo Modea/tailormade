@@ -4,3 +4,7 @@ phases:
   install:
     commands:
       - echo Entered the install phase...
+artifacts:
+  files:
+    - 'public/**/*'
+  name: tailormade-$(date +%Y-%m-%d)
